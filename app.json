@@ -19,15 +19,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.watsos.shoppinglistapp"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.watsos.shoppinglistapp"
+      }
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
