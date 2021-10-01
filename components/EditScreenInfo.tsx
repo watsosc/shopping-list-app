@@ -1,12 +1,24 @@
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import RNGestureHandlerButton from 'react-native-gesture-handler/lib/typescript/components/GestureHandlerButton';
 
 import Colors from '../constants/Colors';
-import { MonoText } from './StyledText';
-import { Text, View } from './Themed';
+import { Text, TextInput, View } from './Themed';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  const [text, setText] = React.useState("");
+  const [focused, setFocused] = React.useState(false);
+
+  const handleFocus = () => setFocused(true);
+  const handleBlur = () => setFocused(false);
+
+  const handleText = (text : string) => {
+    console.log("Thanks for updating the text!");
+    setText(text);
+  }
+
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -14,22 +26,20 @@ export default function EditScreenInfo({ path }: { path: string }) {
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)">
-          Open up the code for this screen:
+          Write something here:
         </Text>
 
-        <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View>
-
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
+        <TextInput
+          style={[styles.getStartedInput, { borderBottomColor: focused ? 'rgba(0,0,255,0.6)' : 'rgba(0,0,0,1.0)' }]}
+          lightColor="rgba(0,0,0,0.6)"
+          darkColor="rgba(255,255,255,0.7)"
+          placeholder="Write in me"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          value={text}
+          onChangeText={handleText}
+          selectTextOnFocus={true}
+          underlineColorAndroid="transparent"/>
       </View>
 
       <View style={styles.helpContainer}>
@@ -50,8 +60,12 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
+  primaryContainer: {
+    flex: 1,
+    alignItems: 'stretch',
+  },
   getStartedContainer: {
-    alignItems: 'center',
+    alignItems: 'stretch',
     marginHorizontal: 50,
   },
   homeScreenFilename: {
@@ -64,7 +78,13 @@ const styles = StyleSheet.create({
   getStartedText: {
     fontSize: 17,
     lineHeight: 24,
-    textAlign: 'center',
+    textAlign: 'left',
+  },
+  getStartedInput: {
+    fontSize: 17,
+    textAlign: 'left',
+    borderBottomWidth: 1,
+    padding: 10,
   },
   helpContainer: {
     marginTop: 15,
